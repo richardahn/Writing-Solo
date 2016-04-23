@@ -1,0 +1,29 @@
+{
+  "name": "Writing-Solo",
+  "version": "1.0.0",
+  "description": "An application for writers and debaters to write arguments and learn how to write better.",
+  "main": "server.js",
+  "keywords": [],
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongoose": "^4.4.13"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.1"
+  },
+  "scripts": {
+    "pretest": "",
+    "test": "mocha test",
+    "start": "nodemon C:\\Users\\Richard\\Desktop\\Writing-Solo\\server.js"
+  },
+  "author": "Richard Ahn",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richardahn/Writing-Solo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/richardahn/Writing-Solo/issues"
+  },
+  "homepage": "https://github.com/richardahn/Writing-Solo"
+}
