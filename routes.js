@@ -3,7 +3,7 @@ var topicApiController = require('./controllers/api/topicApiController');
 var userApiController = require('./controllers/api/userApiController');
 
 // Called when setup-routes is called
-function setup(app) {
+function setup(app, passport) {
     // TODO: fill up these routes later
     // ==================== Load API routes ====================== //
     var apiRouter = express.Router();
@@ -20,10 +20,15 @@ function setup(app) {
 
     // ==================== Load General routes ================== //
     // Topic routes
-    var topicRouter = express.Router();
-    topicRouter.route('/topics')
-        .post(topicApiController.postTopic);
-    app.use(topicRouter);
+    var genRouter = express.Router();
+    genRouter.route('/')
+        .get(function(req, res) {
+            res.render('index');
+        })
+        .post(passport.authenticate('local-signup'), function(req, res) {
+            res.redirect('/');
+        });
+    app.use(genRouter);
 
 };
 
