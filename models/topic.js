@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 
 // Define our topic schema
+// I'm assuming a one-to-many model as opposed to a one-to-squillions model
 var TopicSchema = new mongoose.Schema({
     title: {
         type: String,
