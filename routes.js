@@ -1,4 +1,5 @@
 var express = require('express');
+var topicApiController = require('./controllers/api/topicApiController');
 
 // Called when setup-routes is called
 module.exports = function(app) {
@@ -11,9 +12,12 @@ module.exports = function(app) {
     app.use('/api', apiRouter);
 
     // ==================== Load General routes ================== //
-    var genRouter = express.Router();
-    genRouter.get('/', function(req, res) {
-        res.json({ message: 'dummytext'});
-    });
-    app.use(genRouter);
+    // Topic routes
+    var topicRouter = express.Router();
+    topicRouter.route('/topics')
+        .post(topicApiController.postTopic);
+    app.use(topicRouter);
+
+    //
+
 };

@@ -8,7 +8,7 @@ var TopicSchema = new mongoose.Schema({
         unique: true
     },
     date: Date,
-    discussions: []
+    discussions: [] // one-to-many relationship with discussions
 });
 
 module.exports = mongoose.model('Topic', TopicSchema);
