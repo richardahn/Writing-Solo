@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Logs
+*.log
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

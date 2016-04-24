@@ -2,13 +2,16 @@ var express = require('express');
 var topicApiController = require('./controllers/api/topicApiController');
 
 // Called when setup-routes is called
-module.exports = function(app) {
+function setup(app) {
     // TODO: fill up these routes later
     // ==================== Load API routes ====================== //
     var apiRouter = express.Router();
-    apiRouter.get('/', function(req, res) {
-        res.json({ message: 'dummytext'});
-    });
+    apiRouter.route('/topics')
+        .post(topicApiController.postTopic)
+        .get(topicApiController.getTopics);
+    apiRouter.route('/topics/:title')
+        .get(topicApiController.getTopic)
+        .delete(topicApiController.deleteTopic);
     app.use('/api', apiRouter);
 
     // ==================== Load General routes ================== //
@@ -18,6 +21,6 @@ module.exports = function(app) {
         .post(topicApiController.postTopic);
     app.use(topicRouter);
 
-    //
-
 };
+
+exports.setup = setup;

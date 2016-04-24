@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 // Define our topic schema
 var TopicSchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
         unique: true
     },
