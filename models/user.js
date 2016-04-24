@@ -38,4 +38,15 @@ UserSchema.pre('save', function(cb) {
     });
 });
 
+UserSchema.methods.verifyPassword = function(password, cb) {
+    // compare() compares a new password with the hashed password
+    bcrypt.compare(password, this.password, function(err, isMatch) {
+        if (err) {
+            return cb(err);
+        } else {
+            cb(null, isMatch);
+        }
+    });
+}
+
 module.exports = mongoose.model('User', UserSchema);
