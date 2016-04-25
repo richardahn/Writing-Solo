@@ -30,9 +30,7 @@ exports.setup = function(passport) {
                         return done(null, false);
                     } else {
                         // Create a new user
-                        console.log("CREATED NEW USER");
                         userController.postUser(username, password, done); // end of userController.postUser
-                        console.log("DONE");
                     } // end of if/else
                 }); // end of User.findOne
             }); // end of process

@@ -12,3 +12,11 @@ exports.postUser = function(username, password, cb) {
 exports.getUsers = function(cb) {
     User.find(cb);
 };
+
+exports.getUser = function(username, cb) {
+    User.findOne({ "username": username }, cb);
+}
+
+exports.deleteUser = function(username, cb) {
+    User.findOneAndRemove({ "username": username }, cb);
+}

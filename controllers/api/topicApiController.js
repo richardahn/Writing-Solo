@@ -1,13 +1,13 @@
 var topicController = require('../native/topicController');
-var exceptions = require('../../strings/exceptions');
-var successful = require('../../strings/success');
+var unsuccessful = require('../../strings/unsuccessful');
+var successful = require('../../strings/successful');
 
 // ================== POST request at endpoint /api/topics ================== //
 exports.postTopic = function(req, res) {
     topicController.postTopic(req.body.title, function(err) {
         if (err) {
-            res.status(exceptions.status.badRequest);
-            res.send(exceptions.message.duplicatePost);
+            res.status(unsuccessful.topic.status);
+            res.json(unsuccessful.topic.post);
         } else {
             res.json(successful.topic.post);
         }
@@ -18,8 +18,8 @@ exports.postTopic = function(req, res) {
 exports.getTopics = function(req, res) {
     topicController.getTopics(function(err, topics) {
         if (err) {
-            res.status(exceptions.default.status);
-            res.send(exceptions.default.error);
+            res.status(unsuccessful.topic.status);
+            res.json(unsuccessful.topic.get);
         } else {
             res.json(topics);
         }
@@ -31,8 +31,8 @@ exports.getTopic = function(req, res) {
     topicController.getTopic(req.params.title, function(err, topic) {
         // No error will be given when nothing is found. This is intentional and api users are aware
         if (err) {
-            res.status(exceptions.default.status);
-            res.send(exceptions.default.error);
+            res.status(unsuccessful.topic.status);
+            res.json(unsuccessful.topic.get);
         } else {
             res.json(topic);
         }
@@ -43,8 +43,8 @@ exports.getTopic = function(req, res) {
 exports.deleteTopic = function(req, res) {
     topicController.deleteTopic(req.params.title, function(err) {
         if (err) {
-            res.status(exceptions.default.status);
-            res.send(exceptions.default.error);
+            res.status(unsuccessful.topic.status);
+            res.json(unsuccessful.topic.delete);
         } else {
             res.json(successful.topic.delete);
         }
