@@ -1,9 +1,9 @@
 var express = require('express');
-var topicApiController = require('./controllers/api/topicApiController');
-var userApiController = require('./controllers/api/userApiController');
+var topicApiController = require('../controllers/api/topicApiController');
+var userApiController = require('../controllers/api/userApiController');
 
 // Called when setup-routes is called
-function setup(app, passport) {
+exports.setup = function setup(app, passport) {
     // TODO: fill up these routes later
     // ==================== Load API routes ====================== //
     var apiRouter = express.Router();
@@ -31,5 +31,3 @@ function setup(app, passport) {
     app.use(genRouter);
 
 };
-
-exports.setup = setup;

@@ -1,44 +1,37 @@
-// Remember that express is a web application framework
-// So it's the skeleton for your web application
-// First, we need to LOAD the express framework
-// and then initialize it as an application
+// ================== Load necessary files ================== //
 var express = require('express'); // Web app framework
 var app = express(); // The application that our server uses
 var config = require('./config'); // Holds our settings for various things
 var mongoose = require('mongoose'); // simple MongoDB object modeling
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
+var bodyParser = require('body-parser'); // middleware that parses body -> req.body
+var cookieParser = require('cookie-parser'); // middleware that parses cookies
+var passport = require('passport'); // for authentication
+var session = require('express-session'); // for sessions
 mongoose.connect(config.mongodb.writing_solo);
-var Topic = require('./models/topic');
-// process.env.port is what the computer has set for its
-// environment variable called PORT. It's like the default
-// port that may be different for each computer.
 var port = process.env.port || config.port;
 
+// ================== Setup the application ================== //
 app.set('view engine', 'ejs');
 app.set('views', __dirname+'/views');
-
-// We now add our bodyParser middleware to the app
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-// Setup session
 app.use(session({
-    secret: 'secretpassword',
-    resave: true,
-    saveUninitialized: true
+    secret: config.session.secret,
+    resave: config.session.resave,
+    saveUninitialized: config.session.saveUninitialized
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-require('./controllers/authController')(passport);
 
-// Now, we can load our routes
-var routes = require('./routes');
+// ================== Setup authentication ================== //
+var authentication = require('./middlewares/authentication');
+authentication.setup(passport);
+
+// ==================== Setup routing ==================== //
+var routes = require('./middlewares/routes');
 routes.setup(app, passport);
+
+// ================== Start the server ================== //
 var server = app.listen(port);
 console.log('Listening on port ' + port);
 module.exports = server;

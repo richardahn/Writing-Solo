@@ -2,7 +2,7 @@ var assert = require('chai').assert;
 var request = require('supertest');
 var mongoose = require('mongoose');
 var server = require('../server');
-var exceptions = require('../exceptions');
+var exceptions = require('../strings/exceptions');
 
 var topicTitleOne = "A discussion ssaabout abortion";
 var topicTitleTwo = "Politics";

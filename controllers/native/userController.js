@@ -1,4 +1,4 @@
-var User = require('../models/user');
+var User = require('../../models/user');
 
 exports.postUser = function(username, password, cb) {
     var user = new User({

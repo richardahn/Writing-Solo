@@ -1,20 +1,20 @@
+var topicController = require('../native/topicController');
+var exceptions = require('../../strings/exceptions');
+var successful = require('../../strings/success');
 
-var topicController = require('../topicController');
-var exceptions = require('../../exceptions');
-
-// POST request at endpoint /api/topics
+// ================== POST request at endpoint /api/topics ================== //
 exports.postTopic = function(req, res) {
     topicController.postTopic(req.body.title, function(err) {
         if (err) {
-            res.status(exceptions.default.status);
-            res.send(exceptions.default.error);
+            res.status(exceptions.status.badRequest);
+            res.send(exceptions.message.duplicatePost);
         } else {
-            res.json({ message: 'Successfully added a topic' });
+            res.json(successful.topic.post);
         }
     });
 };
 
-// GET request at endpoint /api/topics
+// ================== GET request at endpoint /api/topics ================== //
 exports.getTopics = function(req, res) {
     topicController.getTopics(function(err, topics) {
         if (err) {
@@ -26,7 +26,7 @@ exports.getTopics = function(req, res) {
     });
 };
 
-// GET request at endpoint /api/topics/:title
+// ================== GET request at endpoint /api/topics/:title ================== //
 exports.getTopic = function(req, res) {
     topicController.getTopic(req.params.title, function(err, topic) {
         // No error will be given when nothing is found. This is intentional and api users are aware
@@ -39,14 +39,14 @@ exports.getTopic = function(req, res) {
     });
 };
 
-// DELETE request at endpoint /api/topics/:title
+// ================== DELETE request at endpoint /api/topics/:title ================== //
 exports.deleteTopic = function(req, res) {
     topicController.deleteTopic(req.params.title, function(err) {
         if (err) {
             res.status(exceptions.default.status);
             res.send(exceptions.default.error);
         } else {
-            res.json({ message: 'Topic removed.'});
+            res.json(successful.topic.delete);
         }
     });
 };

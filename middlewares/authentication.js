@@ -1,8 +1,8 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
-var userController = require('./userController');
+var userController = require('../controllers/native/userController');
 
-module.exports = function(passport) {
+exports.setup = function(passport) {
     // We need to serialize the user into and out of session,
     // To do so, we will use their usernames to do so,
     passport.serializeUser(function(user, done) {
@@ -30,16 +30,9 @@ module.exports = function(passport) {
                         return done(null, false);
                     } else {
                         // Create a new user
-                        userController.postUser(username, password, function(err, user) {
-                            console.log("GOT USER!!!!");
-                            console.log(user);
-
-                            if (err) {
-                                return done(err);
-                            } else {
-                                return done(null, user);
-                            }
-                        }); // end of userController.postUser
+                        console.log("CREATED NEW USER");
+                        userController.postUser(username, password, done); // end of userController.postUser
+                        console.log("DONE");
                     } // end of if/else
                 }); // end of User.findOne
             }); // end of process
