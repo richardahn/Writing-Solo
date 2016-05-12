@@ -6,6 +6,7 @@ exports.postUser = function(username, password, cb) {
         "password": password
     });
 
+    // The mongoose save callback will pass in (err, documentSaved, number of ros affected)
     user.save(cb);
 };
 

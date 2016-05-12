@@ -14,39 +14,29 @@ var UserSchema = new mongoose.Schema({
     discussions: []
 });
 
-// Create a hook function that gets called before being save()'d
+// When am I saving? I always save when I post a user, or when I update a user, so therefore, I'll add hooks to those so that the password
+// always gets saved
 UserSchema.pre('save', function(cb) {
     var user = this;
 
-    // If the password hasn't changed and isn't new
-    if (!user.isModified('password') && !user.isNew('password')) return cb();
-
-    // If it has changed,
-    bcrypt.genSalt(5, function(err, salt) {
+    // If the password has changed, hash it
+    if (!user.isModified('password')) return cb();
+    // hash(data, salt, progress, callback)
+    // progress isn't necessary, so null
+    // salt will be auto-gen since we passed null
+    bcrypt.hash(user.password, null, null, function(err, hash) {
         if (err) {
             return cb(err);
         } else {
-            bcrypt.hash(user.password, salt, null, function(err, hash) {
-                if (err) {
-                    return cb(err);
-                } else {
-                    user.password = hash;
-                    cb();
-                }
-            });
+            user.password = hash;
+            return cb();
         }
     });
 });
 
-UserSchema.methods.verifyPassword = function(password, cb) {
-    // compare() compares a new password with the hashed password
-    bcrypt.compare(password, this.password, function(err, isMatch) {
-        if (err) {
-            return cb(err);
-        } else {
-            cb(null, isMatch);
-        }
-    });
+UserSchema.methods.verifyPassword = function(password) {
+    return bcrypt.compare(password, this.password);
+
 }
 
 module.exports = mongoose.model('User', UserSchema);

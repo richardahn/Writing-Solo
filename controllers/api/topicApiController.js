@@ -41,12 +41,19 @@ exports.getTopic = function(req, res) {
 
 // ================== DELETE request at endpoint /api/topics/:title ================== //
 exports.deleteTopic = function(req, res) {
-    topicController.deleteTopic(req.params.title, function(err) {
+    topicController.deleteTopic(req.params.title, function(err, topic) {
+        // Like getTopic, no error will be given when nothing is found. This is intentional and api users are aware
+        // However, unlike getTopic, I'm returning a message in both cases, so I will be more clear about what happened
+        // by using two different messages
         if (err) {
             res.status(unsuccessful.topic.status);
             res.json(unsuccessful.topic.delete);
         } else {
-            res.json(successful.topic.delete);
+            if (topic) {
+                res.json(successful.topic.delete.found);
+            } else {
+                res.json(successful.topic.delete.notFound);
+            }
         }
     });
 };

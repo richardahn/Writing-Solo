@@ -1,12 +1,13 @@
 {
   "name": "Writing-Solo",
   "version": "1.0.0",
-  "description": "An application for writers and debaters to write arguments and learn how to write better.",
+  "description": "A platform for writers to write about anything",
   "main": "server.js",
-  "keywords": [],
+  "homepage": "https://github.com/richardahn/Writing-Solo",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.1",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
@@ -33,6 +34,5 @@
   },
   "bugs": {
     "url": "https://github.com/richardahn/Writing-Solo/issues"
-  },
-  "homepage": "https://github.com/richardahn/Writing-Solo"
+  }
 }

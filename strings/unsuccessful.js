@@ -2,7 +2,6 @@
 
 module.exports = {
     topic: {
-        status: 404,
         post: 'Unsuccessfully added a topic',
         delete: 'Unsuccessfully removed a topic',
         get: 'Unsuccessfully found a topic'
@@ -10,6 +9,7 @@ module.exports = {
     user: {
         status: 404,
         post: 'Unsuccessfully added a user',
+        delete: 'Unsuccessfully removed a user',
         get: 'Unsuccessfully got a user'
     }
 }

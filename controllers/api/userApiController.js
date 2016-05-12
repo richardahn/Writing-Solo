@@ -7,7 +7,7 @@ exports.postUser = function(req, res) {
     userController.postUser(req.body.username, req.body.password, function(err) {
         if (err) {
             res.status(unsuccessful.user.status);
-            res.send(unsuccessful.user.post);
+            res.json(unsuccessful.user.post);
         } else {
             res.json(successful.user.post);
         }
@@ -19,7 +19,7 @@ exports.getUsers = function(req, res) {
     userController.getUsers(function(err, users) {
         if (err) {
             res.status(unsuccessful.user.status);
-            res.send(unsuccessful.user.get);
+            res.json(unsuccessful.user.get);
         } else {
             res.json(users);
         }
@@ -31,7 +31,7 @@ exports.getUser = function(req, res) {
     userController.getUser(req.params.username, function(err, user) {
         if (err) {
             res.status(unsuccessful.user.status);
-            res.send(unsuccessful.user.get);
+            res.json(unsuccessful.user.get);
         } else {
             res.json(user);
         }
@@ -43,9 +43,13 @@ exports.deleteUser = function(req, res) {
     userController.deleteUser(req.params.username, function(err, user) {
         if (err) {
             res.status(unsuccessful.user.status);
-            res.send(unsuccessful.user.delete);
+            res.json(unsuccessful.user.delete);
         } else {
-            res.json(user);
+            if (user) {
+                res.json(successful.user.delete.found);
+            } else {
+                res.json(successful.user.delete.notFound);
+            }
         }
     })
 }

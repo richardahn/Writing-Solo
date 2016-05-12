@@ -7,6 +7,7 @@ var bodyParser = require('body-parser'); // middleware that parses body -> req.b
 var cookieParser = require('cookie-parser'); // middleware that parses cookies
 var passport = require('passport'); // for authentication
 var session = require('express-session'); // for sessions
+var flash = require('connect-flash');
 mongoose.connect(config.mongodb.writing_solo);
 var port = process.env.port || config.port;
 
@@ -22,16 +23,18 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // ================== Setup authentication ================== //
 var authentication = require('./middlewares/authentication');
-authentication.setup(passport);
+authentication.setup();
 
 // ==================== Setup routing ==================== //
 var routes = require('./middlewares/routes');
-routes.setup(app, passport);
+routes.setup(app);
 
 // ================== Start the server ================== //
-var server = app.listen(port);
-console.log('Listening on port ' + port);
+var server = app.listen(port, function() {
+    console.log('Listening on port ' + port);
+});
 module.exports = server;
